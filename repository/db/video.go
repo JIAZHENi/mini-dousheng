@@ -11,3 +11,8 @@ func SelectVideos(latestTime int64) (videoList []model.Video, err error) {
 	}
 	return
 }
+
+func SaveVideo(video *model.Video) error {
+	err := db.Create(&video).Error
+	return err
+}
