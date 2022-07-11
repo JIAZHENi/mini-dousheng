@@ -6,10 +6,10 @@ import (
 )
 
 func CommentAdd(userId int64, videoId int64, commentId int64, text string) error {
-	return db.CommentAdd(videoId, userId, commentId, text)
+	return db.CommentAdd(userId, videoId, commentId, text)
 }
 
-func CommentDelete(videoId int64, userId int64, commentId int64) error {
+func CommentDelete(userId int64, videoId int64, commentId int64) error {
 	return db.CommentDelete(videoId, userId, commentId)
 }
 

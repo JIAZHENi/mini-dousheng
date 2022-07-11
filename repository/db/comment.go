@@ -5,7 +5,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func CommentAdd(videoId int64, userId int64, commentId int64, text string) error {
+func CommentAdd(userId int64, videoId int64, commentId int64, text string) error {
 	var c model.Comment
 	var v model.Video
 	c.VideoId = videoId
@@ -47,7 +47,7 @@ func CommentDelete(videoId int64, userId int64, commentId int64) error {
 
 func SelectComment(videoId int64) ([]model.Comment, error) {
 	var c []model.Comment
-	err := db.Where("video_id", videoId).Find(&c).Error
+	err := db.Where("video_id = ? and action_type = ?", videoId, 1).Find(&c).Error
 	if err != nil {
 		return nil, err
 	}
