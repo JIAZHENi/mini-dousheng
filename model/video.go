@@ -40,7 +40,14 @@ func ResponseFeedError(c *gin.Context) {
 
 func ResponsePublishListSuccess(c *gin.Context, videoList []VideoMessage) {
 	c.JSON(http.StatusOK, &PublishListResponse{
-		Response: Response{StatusCode: 1, StatusMsg: "操作失败"},
+		Response: Response{StatusCode: 0, StatusMsg: "操作成功"},
+		Videos:   videoList,
+	})
+}
+
+func ResponseFavoriteListSuccess(c *gin.Context, videoList []VideoMessage) {
+	c.JSON(http.StatusOK, &PublishListResponse{
+		Response: Response{StatusCode: 0, StatusMsg: "操作成功"},
 		Videos:   videoList,
 	})
 }

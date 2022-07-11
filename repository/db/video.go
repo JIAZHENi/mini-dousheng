@@ -37,3 +37,12 @@ func SelectVideo(userId int64) ([]model.Video, error) {
 	}
 	return videos, nil
 }
+
+func FindVideo(videoId int64) (model.Video, error) {
+	var videos model.Video
+	err := db.Where("id = ?", videoId).Find(&videos).Error
+	if err != nil {
+		return model.Video{}, err
+	}
+	return videos, nil
+}

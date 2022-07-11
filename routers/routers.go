@@ -34,10 +34,10 @@ func SetupRouter(mode string) *gin.Engine {
 		apiRouter.GET("/publish/list/", controller.PublishList) // 发布列表
 
 		// extra apis - I
-		//apiRouter.POST("/favorite/action/", controller.FavoriteAction) // 点赞操作
-		//apiRouter.GET("/favorite/list/", controller.FavoriteList)      // 点赞列表
-		//apiRouter.POST("/comment/action/", controller.CommentAction)   // 评论操作
-		//apiRouter.GET("/comment/list/", controller.CommentList)        // 评论列表
+		apiRouter.POST("/favorite/action/", controller.FavoriteAction) // 点赞操作
+		apiRouter.GET("/favorite/list/", controller.FavoriteList)      // 点赞列表
+		apiRouter.POST("/comment/action/", controller.CommentAction)   // 评论操作
+		apiRouter.GET("/comment/list/", controller.CommentList)        // 评论列表
 
 		// extra apis - II
 		//apiRouter.POST("/relation/action/", controller.RelationAction)     // 关注操作
