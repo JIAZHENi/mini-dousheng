@@ -17,7 +17,7 @@ func JWTAuth() func(c *gin.Context) {
 
 		// 2.验证 token
 		if token == "" {
-			log.Println("user UnLogin")
+			log.Println("user unLogin")
 			c.Set("loginId", int64(0))
 		} else {
 			JWTMassage, err := jwt.CheckToken(token)

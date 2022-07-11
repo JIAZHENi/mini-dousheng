@@ -2,30 +2,33 @@ package db
 
 import (
 	"Git/mini-dousheng/model"
-	"log"
 )
 
-func SelectUser(userId int64) (user model.User, err error) {
-	err = db.Where("id = ?", userId).First(&user).Error
+func FindUser(userId int64) (model.User, error) {
+	var u model.User
+	err := db.Where("id = ?", userId).Find(&u).Error
 	if err != nil {
-		log.Println("SelectUser error:", err)
-		return
+		return model.User{}, err
 	}
-	return
+	return u, nil
 }
 
-func CreateUser(u *model.User) (userId int64, err error) {
-	err = db.Create(&u).Error
+func CreateUser(userName string, password string) (int64, error) {
+	var u model.User
+	u.UserName = userName
+	u.Password = password
+	err := db.Create(&u).Error
 	if err != nil {
 		return 0, err
 	}
 	return u.Id, nil
 }
 
-func FindUser(u *model.User) (userId int64, err error) {
-	err = db.First(&u).Error
+func UserIsExist(userName string, password string) (int64, error) {
+	var u model.User
+	err := db.Where("user_name = ? and password = ?", userName, password).First(&u).Error
 	if err != nil {
-		return -1, err
+		return 0, err
 	}
 	return u.Id, nil
 }

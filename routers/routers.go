@@ -28,10 +28,10 @@ func SetupRouter(mode string) *gin.Engine {
 	apiRouter.POST("/user/login/", controller.Login)       // 用户登录
 	apiRouter.Use(middlewares.JWTAuth())
 	{
-		apiRouter.GET("/feed/", controller.Feed)               // 视频流接口
-		apiRouter.GET("/user/", controller.UserInfo)           // 用户信息
-		apiRouter.POST("/publish/action/", controller.Publish) // 视频投稿
-		//apiRouter.GET("/publish/list/", controller.PublishList) // 发布列表
+		apiRouter.GET("/feed/", controller.Feed)                // 视频流接口
+		apiRouter.GET("/user/", controller.UserInfo)            // 用户信息
+		apiRouter.POST("/publish/action/", controller.Publish)  // 视频投稿
+		apiRouter.GET("/publish/list/", controller.PublishList) // 发布列表
 
 		// extra apis - I
 		//apiRouter.POST("/favorite/action/", controller.FavoriteAction) // 点赞操作

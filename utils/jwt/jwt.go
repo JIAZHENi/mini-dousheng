@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-var Jwtkey = []byte("记忆")
+var MyJwtKey = []byte("记忆")
 
 type MyClaims struct {
 	UserId   int64  `json:"user_id"`
@@ -28,13 +28,13 @@ func CreateToken(userId int64, userName string) (string, error) {
 		},
 	}
 	tokenStruct := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return tokenStruct.SignedString(Jwtkey)
+	return tokenStruct.SignedString(MyJwtKey)
 }
 
 // CheckToken 验证token
 func CheckToken(token string) (*MyClaims, bool) {
 	tokenObj, _ := jwt.ParseWithClaims(token, &MyClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return Jwtkey, nil
+		return MyJwtKey, nil
 	})
 	if key, _ := tokenObj.Claims.(*MyClaims); tokenObj.Valid && time.Now().Unix() < key.ExpiresAt {
 		return key, true
