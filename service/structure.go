@@ -8,7 +8,7 @@ import (
 func NewUserMassage(user model.User, loginId int64) (model.UserMessage, error) {
 	return model.UserMessage{
 		User:     user,
-		IsFollow: false,
+		IsFollow: db.IsAttention(user.Id, loginId),
 	}, nil
 }
 

@@ -31,7 +31,12 @@ func CommentDelete(videoId int64, userId int64, commentId int64) error {
 	var c model.Comment
 	var v model.Video
 	tx := db.Begin()
-	err := tx.Model(&c).Where("video_id = ? and user_id = ? and comment_id = ?", videoId, userId, commentId).Update("action_type", 0).Error
+	err := tx.Where("video_id = ? and user_id = ? and comment_id = ?", videoId, userId, commentId).First(&c).Error
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+	err = tx.Model(&c).Where("video_id = ? and user_id = ? and comment_id = ?", videoId, userId, commentId).Update("action_type", 0).Error
 	if err != nil {
 		tx.Rollback()
 		return err

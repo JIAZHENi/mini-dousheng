@@ -54,9 +54,7 @@ func IsLikeAction(userId int64, videoId int64) bool {
 
 func IsLikeVideo(userId int64, videoId int64) bool {
 	var u model.Enjoy
-	u.UserId = userId
-	u.VideoId = videoId
-	err := db.Where("is_favorite = ?", 1).First(&u).Error
+	err := db.Where("video_id = ? and user_id = ? and is_favorite = ?", videoId, userId, 1).First(&u).Error
 	if err != nil {
 		return false
 	}

@@ -4,7 +4,6 @@ import (
 	"Git/mini-dousheng/model"
 	"Git/mini-dousheng/service"
 	"github.com/gin-gonic/gin"
-	"strconv"
 )
 
 func Publish(c *gin.Context) {
@@ -26,10 +25,13 @@ func Publish(c *gin.Context) {
 
 func PublishList(c *gin.Context) {
 	loginId, _ := c.Get("loginId")
-	user := c.Query("user_id")
-	userId, _ := strconv.ParseInt(user, 10, 64)
+	var p model.UserIdRequest
+	if err := c.ShouldBind(&p); err != nil {
+		model.ResponseError(c)
+		return
+	}
 
-	videoList, err := service.GetPublishList(loginId.(int64), userId)
+	videoList, err := service.GetPublishList(loginId.(int64), p.UserId)
 	if err != nil {
 		model.ResponseError(c)
 		return

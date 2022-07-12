@@ -3,29 +3,26 @@ package controller
 import (
 	"Git/mini-dousheng/model"
 	"Git/mini-dousheng/service"
-	"encoding/json"
 	"github.com/gin-gonic/gin"
-	"log"
-	"strconv"
 )
 
 func CommentAction(c *gin.Context) {
 	loginId, _ := c.Get("loginId")
-	video := c.Query("video_id")
-	comment := c.Query("comment_id")
-	actionType := c.Query("action_type")
-	videoId, _ := strconv.ParseInt(video, 10, 64)
-	commentId, _ := strconv.ParseInt(comment, 10, 64)
+	var p model.CommentActionRequest
+	if err := c.ShouldBind(&p); err != nil {
+		model.ResponseError(c)
+		return
+	}
 
-	if actionType == "1" {
+	if p.ActionType == "1" {
 		text := c.Query("comment_text")
-		err := service.CommentAdd(loginId.(int64), videoId, commentId, text)
+		err := service.CommentAdd(loginId.(int64), p.VideoId, p.CommentId, text)
 		if err != nil {
 			model.ResponseError(c)
 			return
 		}
 	} else {
-		err := service.CommentDelete(loginId.(int64), videoId, commentId)
+		err := service.CommentDelete(loginId.(int64), p.VideoId, p.CommentId)
 		if err != nil {
 			model.ResponseError(c)
 			return
@@ -37,20 +34,17 @@ func CommentAction(c *gin.Context) {
 
 func CommentList(c *gin.Context) {
 	loginId, _ := c.Get("loginId")
-	video := c.Query("video_id")
-	videoId, _ := strconv.ParseInt(video, 10, 64)
-	log.Println(videoId, loginId.(int64), "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+	var p model.VideoRequest
+	if err := c.ShouldBind(&p); err != nil {
+		model.ResponseError(c)
+		return
+	}
 
-	commentList, err := service.SelectComment(videoId, loginId.(int64))
+	commentList, err := service.SelectComment(p.Video, loginId.(int64))
 	if err != nil {
 		model.ResponseError(c)
 		return
 	}
-	data, err := json.Marshal(commentList) //跨包使用，应该保证字段开头大写，不然会缺少字段
-	if err != nil {
-		log.Printf("序列化错误 err=%v\n", err)
-	}
-	log.Printf("videoList 序列化后=%v\n", string(data))
 
 	model.ResponseCommentListSuccess(c, commentList)
 }

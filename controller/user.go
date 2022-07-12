@@ -4,8 +4,6 @@ import (
 	"Git/mini-dousheng/model"
 	"Git/mini-dousheng/service"
 	"github.com/gin-gonic/gin"
-	"log"
-	"strconv"
 )
 
 func Register(c *gin.Context) {
@@ -38,15 +36,17 @@ func Login(c *gin.Context) {
 
 func UserInfo(c *gin.Context) {
 	loginId, _ := c.Get("loginId")
-	user := c.Query("user_id")
-	userId, _ := strconv.ParseInt(user, 10, 64)
+	var p model.UserIdRequest
+	if err := c.ShouldBind(&p); err != nil {
+		model.ResponseError(c)
+		return
+	}
 
-	userMassage, err := service.UserInfo(loginId.(int64), userId)
+	userMassage, err := service.UserInfo(loginId.(int64), p.UserId)
 	if err != nil {
 		model.ResponseError(c)
 		return
 	}
-	log.Println(userMassage)
 
 	model.ResponseInfoSuccess(c, userMassage)
 }

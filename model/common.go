@@ -35,7 +35,7 @@ type Enjoy struct {
 type Relation struct {
 	UserId     int64
 	FollowerId int64
-	IsFollower bool      `gorm:"default:1"`
+	IsFavorite bool      `gorm:"default:1"`
 	CreateTime time.Time `gorm:"autoCreateTime"`
 	ModifyTime time.Time `gorm:"autoUpdateTime"`
 }

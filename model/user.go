@@ -21,6 +21,11 @@ type UserInfoResponse struct {
 	UserMessage `json:"user,omitempty"`
 }
 
+type UserFollowResponse struct {
+	Response
+	FollowList []UserMessage `json:"user_list"`
+}
+
 func ResponseUserSuccess(c *gin.Context, userId int64, token string) {
 	c.JSON(http.StatusOK, &UserResponse{
 		Response: Response{StatusCode: 0, StatusMsg: "操作成功"},
@@ -39,5 +44,12 @@ func ResponseInfoSuccess(c *gin.Context, u UserMessage) {
 	c.JSON(http.StatusOK, &UserInfoResponse{
 		Response:    Response{StatusCode: 0, StatusMsg: "操作成功"},
 		UserMessage: u,
+	})
+}
+
+func ResponseFollowSuccess(c *gin.Context, u []UserMessage) {
+	c.JSON(http.StatusOK, &UserFollowResponse{
+		Response:   Response{StatusCode: 0, StatusMsg: "操作成功"},
+		FollowList: u,
 	})
 }

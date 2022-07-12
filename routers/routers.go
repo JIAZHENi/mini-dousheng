@@ -40,9 +40,9 @@ func SetupRouter(mode string) *gin.Engine {
 		apiRouter.GET("/comment/list/", controller.CommentList)        // 评论列表
 
 		// extra apis - II
-		//apiRouter.POST("/relation/action/", controller.RelationAction)     // 关注操作
-		//apiRouter.GET("/relation/follow/list/", controller.FollowList)     // 关注列表
-		//apiRouter.GET("/relation/follower/list/", controller.FollowerList) // 粉丝列表
+		apiRouter.POST("/relation/action/", controller.RelationAction)     // 关注操作
+		apiRouter.GET("/relation/follow/list/", controller.FollowList)     // 关注列表
+		apiRouter.GET("/relation/follower/list/", controller.FollowerList) // 粉丝列表
 	}
 
 	r.NoRoute(func(c *gin.Context) {
