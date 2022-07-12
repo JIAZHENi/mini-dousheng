@@ -23,3 +23,10 @@ func ResponseSuccess(c *gin.Context) {
 		StatusMsg:  "操作成功",
 	})
 }
+
+func ResponseParameterError(c *gin.Context) {
+	c.JSON(http.StatusOK, Response{
+		StatusCode: 1,
+		StatusMsg:  "参数错误",
+	})
+}

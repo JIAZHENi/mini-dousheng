@@ -8,13 +8,12 @@ import (
 
 func Publish(c *gin.Context) {
 	loginId, _ := c.Get("loginId")
-	videoTitle := c.PostForm("title")
-	video, err := c.FormFile("data")
-	if err != nil {
-		model.ResponseError(c)
+	var p model.VideoPublishRequest
+	if err := c.ShouldBind(&p); err != nil {
+		model.ResponseParameterError(c)
 		return
 	}
-	err = service.PublishVideo(video, loginId.(int64), videoTitle)
+	err := service.PublishVideo(p.VideoFile, loginId.(int64), p.VideoTitle)
 	if err != nil {
 		model.ResponseError(c)
 		return
@@ -27,7 +26,7 @@ func PublishList(c *gin.Context) {
 	loginId, _ := c.Get("loginId")
 	var p model.UserIdRequest
 	if err := c.ShouldBind(&p); err != nil {
-		model.ResponseError(c)
+		model.ResponseParameterError(c)
 		return
 	}
 

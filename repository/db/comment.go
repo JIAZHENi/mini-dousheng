@@ -5,7 +5,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func CommentAdd(userId int64, videoId int64, commentId int64, text string) error {
+func CommentAdd(videoId int64, userId int64, commentId int64, text string) error {
 	var c model.Comment
 	var v model.Video
 	c.VideoId = videoId

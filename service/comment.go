@@ -5,12 +5,13 @@ import (
 	"Git/mini-dousheng/repository/db"
 )
 
-func CommentAdd(userId int64, videoId int64, commentId int64, text string) error {
-	return db.CommentAdd(userId, videoId, commentId, text)
-}
+func CommentAction(userId int64, p model.CommentActionRequest) error {
+	if p.ActionType == "1" {
+		return db.CommentAdd(p.VideoId, userId, p.CommentId, p.CommentText)
+	}
 
-func CommentDelete(userId int64, videoId int64, commentId int64) error {
-	return db.CommentDelete(videoId, userId, commentId)
+	return db.CommentDelete(p.VideoId, userId, p.CommentId)
+
 }
 
 func SelectComment(video int64, loginId int64) ([]model.CommentMassage, error) {

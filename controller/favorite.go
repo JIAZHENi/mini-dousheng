@@ -10,7 +10,7 @@ func FavoriteAction(c *gin.Context) {
 	loginId, _ := c.Get("loginId")
 	var v model.FavoriteRequest
 	if err := c.ShouldBind(&v); err != nil {
-		model.ResponseError(c)
+		model.ResponseParameterError(c)
 		return
 	}
 
@@ -28,7 +28,7 @@ func FavoriteList(c *gin.Context) {
 	loginId, _ := c.Get("loginId")
 	var p model.UserIdRequest
 	if err := c.ShouldBind(&p); err != nil {
-		model.ResponseError(c)
+		model.ResponseParameterError(c)
 		return
 	}
 

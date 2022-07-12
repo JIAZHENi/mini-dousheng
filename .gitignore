@@ -17,3 +17,6 @@
 *.idea
 *.jpg
 *.mp4
+pubilc/cover/*
+pubilc/video/*
+#*.gitignore

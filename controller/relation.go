@@ -10,7 +10,7 @@ func RelationAction(c *gin.Context) {
 	loginId, _ := c.Get("loginId")
 	var p model.RelationActionRequest
 	if err := c.ShouldBind(&p); err != nil {
-		model.ResponseError(c)
+		model.ResponseParameterError(c)
 		return
 	}
 	err := service.RelationAction(loginId.(int64), p.ToUserId, p.ActionType)
@@ -26,7 +26,7 @@ func FollowList(c *gin.Context) {
 	loginId, _ := c.Get("loginId")
 	var p model.UserIdRequest
 	if err := c.ShouldBind(&p); err != nil {
-		model.ResponseError(c)
+		model.ResponseParameterError(c)
 		return
 	}
 
@@ -44,7 +44,7 @@ func FollowerList(c *gin.Context) {
 	loginId, _ := c.Get("loginId")
 	var p model.UserIdRequest
 	if err := c.ShouldBind(&p); err != nil {
-		model.ResponseError(c)
+		model.ResponseParameterError(c)
 		return
 	}
 

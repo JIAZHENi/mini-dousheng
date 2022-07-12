@@ -9,7 +9,7 @@ import (
 func Register(c *gin.Context) {
 	var u model.UserRequest
 	if err := c.ShouldBind(&u); err != nil {
-		model.ResponseError(c)
+		model.ResponseParameterError(c)
 		return
 	}
 	userId, token, err := service.UserRegister(u.UserName, u.Password)
@@ -23,7 +23,7 @@ func Register(c *gin.Context) {
 func Login(c *gin.Context) {
 	var u model.UserRequest
 	if err := c.ShouldBind(&u); err != nil {
-		model.ResponseError(c)
+		model.ResponseParameterError(c)
 		return
 	}
 	userId, token, err := service.UserLogin(u.UserName, u.Password)
@@ -38,7 +38,7 @@ func UserInfo(c *gin.Context) {
 	loginId, _ := c.Get("loginId")
 	var p model.UserIdRequest
 	if err := c.ShouldBind(&p); err != nil {
-		model.ResponseError(c)
+		model.ResponseParameterError(c)
 		return
 	}
 
